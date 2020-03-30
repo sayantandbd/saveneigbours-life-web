@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Monda&display=swap');
+body {
+    font-family: 'Monda', cursive !important;
+}
+.vertical-center {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+.display-middle {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.display-column {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}

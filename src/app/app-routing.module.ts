@@ -1,7 +1,34 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-const routes: Routes = [];
+import { HomeComponent } from './home/home.component';
+import { AppComponent } from './app.component';
+import { DefaultComponent } from './default/default.component';
+const routes: Routes = [
+  {
+    path:'',
+    component:DefaultComponent,
+    children: [
+      {
+          path: '',
+          redirectTo: 'home',
+          pathMatch: 'full',
+      },
+      {
+        path:'home',
+        component:HomeComponent
+      },
+      {
+        path: 'feed',
+        loadChildren: () => import('./feed/feed.module').then(m => m.FeedModule)
+      },
+      {
+        path: 'account',
+        loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
+      }
+  ],
+  },
+  
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

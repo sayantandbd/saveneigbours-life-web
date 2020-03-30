@@ -1,0 +1,32 @@
+.masonary-card {
+    
+
+    
+    @media screen and (min-width: 1200px) {
+        width: 22rem;
+    }
+    @media screen and (max-width: 1199px) and (min-width: 901px) {
+        width: 18rem;
+    }
+
+    @media screen and (max-width: 900px) and (min-width: 769px) {
+        width: 20rem;
+    }
+
+    @media screen and (max-width: 768px) and (min-width: 601px) {
+        width: 15rem;
+    }
+
+    @media screen and (max-width: 600px) and (min-width: 481px) {
+        width: 100%;
+    }
+
+    @media screen and (max-width: 480px) and (min-width: 321px) {
+        width: 22rem;
+    }
+
+    @media screen and (max-width: 320px) {
+        width: 22rem;
+    }
+}
+

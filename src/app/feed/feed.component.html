@@ -1,0 +1,109 @@
+<!-- modal -->
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Do you need help?</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Description</label>
+        <textarea type="email" class="form-control" [(ngModel)]="credentials.body" name="body" row="5"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Address</label>
+        <textarea type="email" class="form-control" [(ngModel)]="credentials.address" name="address"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword">Tagged</label>
+        
+        <select class="form-control" [(ngModel)]="credentials.request_type" name="request_type">
+          <option value="Medical Emergency">Medical Emergency</option>
+          <option value="Grocery Required">Grocery Required</option>
+          <option value="Medicine Required">Medicine Required</option>
+          <option value="Transportaion Required">Transportaion Required</option>
+          <option value="Water Required">Water Required</option>
+          <option value="Cash Required">Cash Required</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+  </div>
+</ng-template>
+
+<!-- end modal -->
+
+<div class="container">
+
+  <div class="h-100">
+    <div class="vertical-center">
+
+      <div class="display-column text-center w-100">
+
+        <h1>Welcome {{profile_info.name}}!</h1>
+        <p><button class="btn btn-lg btn-outline-primary" (click)="open(content)">Do you need help?</button></p>
+        <small id="emailHelp" class="form-text text-muted">Medical emergency, Sterving, Complaints, Groceries, Necessary Households</small>
+        <fa-icon [icon]="faChevronDown" size="6x" (click)="scroll(helps)" style="cursor: pointer;"></fa-icon>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+<hr>
+<div class="container">
+
+  
+
+  <div class="row" id="helps" #helps>
+    <div class="col-12">
+      <h3>Some are waiting for your response</h3>
+      <h5>Please help them</h5>
+    </div>
+  </div>
+
+  <!-- helping cards -->
+
+  <ng-masonry-grid
+                  [masonryOptions]="{ transitionDuration: '0.8s', gutter: 5,columnWidth: 17,
+                  fitWidth: true }" 
+                  [useAnimation]="true"
+                  [useImagesLoaded]="true"
+                  [scrollAnimationOptions]="{ animationEffect: 'effect-4', minDuration : 0.4, maxDuration : 0.7 }">
+    
+    <ng-masonry-grid-item id="{{'masonry-item-'+i}}" *ngFor="let item of feeds; let i = index;"> 
+     
+      <div class="card masonary-card">
+        <div class="card-body">
+          <h5 class="card-title">{{item.request_type}} <Br />
+            <small>Posted by {{item.user.name}}</small>
+          </h5>
+          <p class="card-text">
+            {{item.body}}
+            <br />
+            <small><i>Address: {{item.address}}</i></small>
+            <br /><br />
+            <small><strong>{{item.distance}}km</strong> from you location, see in <a href="https://www.google.com/maps/search/?api=1&query={{item.lat}},{{item.lng}}" target="new">map</a></small>
+          </p>
+          <a href="tel:{{item.user.country_code + item.user.phone}}" class="btn-link">{{item.user.country_code + item.user.phone}}</a>
+        </div>
+      </div>
+    </ng-masonry-grid-item>
+  </ng-masonry-grid>
+
+  
+  <!-- // helping cards -->
+
+  
+</div>

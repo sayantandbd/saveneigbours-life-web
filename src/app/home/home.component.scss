@@ -1,0 +1,49 @@
+.background {
+    background-color: #fff; /*Default bg, similar to the background's base color*/
+    background-image: url("../../assets/17750.jpg");
+    background-position: right top; /*Positioning*/
+    background-repeat: no-repeat; /*Prevent showing multiple background images*/
+
+    background-size: cover;
+    
+    margin: 0 auto;
+
+    @media screen and (min-width: 1200px) {
+        height: 60vh;
+        width: 60vw;
+    }
+    @media screen and (max-width: 1199px) and (min-width: 901px) {
+        height: 60vh;
+        width: 70vw;
+    }
+
+    @media screen and (max-width: 900px) and (min-width: 769px) {
+        height: 60vh;
+        width: 80vw;
+    }
+
+    @media screen and (max-width: 768px) and (min-width: 601px) {
+        height: 60vh;
+        width: 90vw;
+    }
+
+    @media screen and (max-width: 600px) and (min-width: 481px) {
+        height: 60vh;
+        width: 100vw;
+    }
+
+    @media screen and (max-width: 480px) and (min-width: 321px) {
+        height: 60vh;
+        width: 100vw;
+    }
+
+    @media screen and (max-width: 320px) {
+        height: 60vh;
+        width: 100vw;
+    }
+    
+ }
+
+ .background-top {
+     height: 40vh;
+ }
