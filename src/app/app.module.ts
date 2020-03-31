@@ -21,6 +21,7 @@ import { NgxUiLoaderModule } from  'ngx-ui-loader';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DefaultComponent } from './default/default.component';
 
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -34,10 +35,14 @@ import { DefaultComponent } from './default/default.component';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    NgbModule.forRoot(),
+    NgbModule,
     NgxUiLoaderModule,
     NgxUiLoaderModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyCKPAh1V0RmUcwP5m4oZoLsRljKU0kuPAs",
+      libraries: ["places"]
+    }),
   ],
   providers: [
     AuthGuard,

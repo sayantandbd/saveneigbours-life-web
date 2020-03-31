@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // apiurl:'https://api.saveneighbours.life/public/',
-  apiurl: 'http://localhost/nextdoor-help/api/public/',
+  apiurl:'https://api.saveneighbours.life/public/',
+  // apiurl: 'http://localhost/nextdoor-help/api/public/',
   countryJson:'https://api.myjson.com/bins/ujjpg'
 };
 

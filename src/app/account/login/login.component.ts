@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
       (error) =>
       {
           this.ngxService.stop();
+          
           let errormsg : string = '';
           for(let i in error.error)
           {
