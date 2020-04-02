@@ -9,7 +9,7 @@ export class AuthGuardService implements CanActivate {
 
       alert("Session expired");
       // navigate to login
-      this.router.navigate(['login']);
+      this.router.navigate(['home']);
       return false;
 
     }

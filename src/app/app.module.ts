@@ -20,8 +20,9 @@ import { NgxUiLoaderModule } from  'ngx-ui-loader';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DefaultComponent } from './default/default.component';
-
 import { AgmCoreModule } from '@agm/core';
+
+// import { NgMasonryGridModule } from 'ng-masonry-grid';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { AgmCoreModule } from '@agm/core';
     NgxUiLoaderModule,
     NgxUiLoaderModule,
     FontAwesomeModule,
+    // NgMasonryGridModule
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyCKPAh1V0RmUcwP5m4oZoLsRljKU0kuPAs",
       libraries: ["places"]

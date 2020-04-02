@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone, ViewChildren, ContentChild } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../services/user.service';
 import { RequestService } from '../services/request.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { MapmodalComponent } from './mapmodal/mapmodal.component';
+import { Observable, Subject, Subscription, BehaviorSubject } from 'rxjs';
+import { UtilityService } from '../services/utility.service';
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
@@ -21,26 +24,52 @@ export class FeedComponent implements OnInit {
     lat:0,lng:0
   };
 
+  
+
   public user_info:any = {'lat':0,'lng':0};
-  public profile_info:any = {'name':''}
+  public profile_info:any = {'name':''};
 
   public feeds:any = [];
+
+  private routerInfo: BehaviorSubject<boolean>;
 
   constructor(private modalService: NgbModal,
     private _userService:UserService,
     private _requestService:RequestService,
-    private ngxService: NgxUiLoaderService) {}
+    private ngxService: NgxUiLoaderService,
+    private _utilityService:UtilityService) {
+      this.routerInfo = new BehaviorSubject<boolean>(false);
+    }
 
-  ngOnInit(){
+  async ngOnInit(){
     
-    this.ngxService.start();
     this.load_profile();
-    this.current_location();
+    this.ngxService.start();
+    this.routerInfo.asObservable().subscribe((success)=>
+    {
+        console.log(success);
+        if(success)
+        {
+          this.load_feed();
+          if(this.profile_info.lat=="0" || this.profile_info.lng==null)
+          this.current_location();
+          else this.ngxService.stop();
+        }
+    });
+    
+    
+    
     
   }
 
+  ngAfterViewInit()
+  {
+  }
+
+
+
   // get current location
-  current_location()
+  async current_location()
   {
     navigator.geolocation.getCurrentPosition((position) => {
       // console.log(position);
@@ -50,11 +79,18 @@ export class FeedComponent implements OnInit {
       this.credentials.lat = position.coords.latitude;
       this.credentials.lng = position.coords.longitude;
       this.update_user();
-      this.load_feed();
+      
     },
     (error)=>
     {
-      alert("Unable to fetch your location, Please provide permissions and try again")
+      this.ngxService.stop();
+      // console.log(this.profile_info);
+      if(this.profile_info.lat=="0" || this.profile_info.lng==null)
+      {
+        this.openMap();
+        console.log("Map opened");
+      }
+      //alert("Unable to fetch your location, Please provide permissions and try again");
     });
   }
 
@@ -87,15 +123,16 @@ export class FeedComponent implements OnInit {
   }
 
   // load profile
-  load_profile()
+  async load_profile()
   {
     this._userService.profile().subscribe(
-      (data)=>
+      async (data)=>
       {
           this.profile_info = data;
           console.log(data);
+          this.routerInfo.next(true);
       },
-      (error) =>
+      async (error) =>
       {
           let errormsg : string = '';
           for(let i in error.error)
@@ -115,6 +152,7 @@ export class FeedComponent implements OnInit {
       (data)=>
       {
           console.log(data);
+          this._utilityService.saveJsonData('user_info',this.user_info);
           this.load_feed();
       },
       (error) =>
@@ -164,6 +202,21 @@ export class FeedComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       console.log(this.closeResult);
     });
+  }
+
+  openMap()
+  {
+    this.ngxService.stop();
+    const modalRef = this.modalService.open(MapmodalComponent);
+    modalRef.componentInstance.passEntry.subscribe((receivedEntry) => {
+      console.log(receivedEntry);
+      this.user_info.lat = receivedEntry.lat;
+      this.user_info.lng = receivedEntry.lng;
+      this.credentials.lat = receivedEntry.lat;
+      this.credentials.lng = receivedEntry.lng;
+      this.update_user();
+      this.load_feed();
+    })
   }
 
   private getDismissReason(reason: any): string {

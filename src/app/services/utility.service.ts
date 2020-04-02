@@ -18,4 +18,14 @@ export class UtilityService {
   {
     return localStorage.getItem("token");
   }
+
+  saveJsonData(key:string,data:any)
+  {
+    // save to local storage
+    localStorage.setItem(key,JSON.stringify(data));
+  }
+  getJsonData(key)
+  {
+    return JSON.parse(localStorage.getItem(key));
+  }
 }

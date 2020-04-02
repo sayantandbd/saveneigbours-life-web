@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AppComponent } from './app.component';
 import { DefaultComponent } from './default/default.component';
+import { AuthGuardService } from './services/auth-guard.service';
 const routes: Routes = [
   {
     path:'',
@@ -19,6 +20,7 @@ const routes: Routes = [
       },
       {
         path: 'feed',
+        canActivate:[AuthGuardService],
         loadChildren: () => import('./feed/feed.module').then(m => m.FeedModule)
       },
       {

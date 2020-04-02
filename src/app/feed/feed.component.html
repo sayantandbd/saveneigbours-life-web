@@ -7,14 +7,23 @@
 
         <h1>Welcome {{profile_info.name}}!</h1>
         <p><button class="btn btn-lg btn-outline-primary" (click)="open(content)">Do you need help?</button></p>
-        <small id="emailHelp" class="form-text text-muted">Medical emergency, Sterving, Complaints, Groceries, Necessary Households</small>
-        <fa-icon [icon]="faChevronDown" size="6x" (click)="scroll(helps)" style="cursor: pointer;"></fa-icon>
-        <div class="form-group">
-          <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+        <!-- <small id="emailHelp" class="form-text text-muted">Medical emergency, Sterving, Complaints, Groceries, Necessary Households</small> -->
+        <div class="row text-left">
+          <div class="col-md-3">
+            <p><span class="help-bulletin">1</span> Use this button if you need help <br /></p>
+          </div>
+          <div class="col-md-6">
+            <p><span class="help-bulletin">2</span> Post on behalf of your friends/family members if they need help from their neighbours.<br /></p>
+          </div>
+          <div class="col-md-3">
+            <p><span class="help-bulletin">3</span> If you know someone is in trouble, but you cannot help them</p>
+          </div>
         </div>
-        <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-          <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-        </agm-map>
+
+        <br />
+        <small id="emailHelp" class="form-text text-muted"><button class="btn btn-link" (click)="openMap()">(Change Location)</button></small>
+        <fa-icon [icon]="faChevronDown" size="6x" (click)="scroll(helps)" style="cursor: pointer;"></fa-icon>
+        
       </div>
 
     </div>
@@ -37,9 +46,32 @@
     </div>
   </div>
 
-  <!-- helping cards -->
+  <br />
+  <p *ngIf="feeds.length==0"><em>It seems nobody needs help in your area. We will notify you once some one needs help.</em></p>
 
-  <ng-masonry-grid
+  <!-- helping cards -->
+  <div class="row">
+    <div class="col-md-3" *ngFor="let item of feeds; let i = index;">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{item.request_type}} <Br />
+            <small>Posted by {{item.user.name}}</small>
+          </h5>
+          <p class="card-text">
+            {{item.body}}
+            <br />
+            <small><i>Address: {{item.address}}</i></small>
+            <br /><br />
+            <small><strong>{{item.distance}}km</strong> from you location, see in <a href="https://www.google.com/maps/search/?api=1&query={{item.lat}},{{item.lng}}" target="new">map</a></small>
+          </p>
+          <a href="tel:{{item.user.country_code + item.user.phone}}" class="btn-link">{{item.user.country_code + item.user.phone}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- <ng-masonry-grid
                   [masonryOptions]="{ transitionDuration: '0.8s', gutter: 5,columnWidth: 17,
                   fitWidth: true }" 
                   [useAnimation]="true"
@@ -64,7 +96,7 @@
         </div>
       </div>
     </ng-masonry-grid-item>
-  </ng-masonry-grid>
+  </ng-masonry-grid> -->
 
   
   <!-- // helping cards -->
@@ -90,6 +122,7 @@
       <div class="form-group">
         <label for="exampleInputEmail1">Address</label>
         <textarea type="email" class="form-control" [(ngModel)]="credentials.address" name="address"></textarea>
+        <small id="emailHelp" class="form-text text-muted">Posting on behalf? <button class="btn btn-link" (click)="openMap()">Change Location</button></small>
       </div>
       <div class="form-group">
         <label for="inputPassword">Tagged</label>
@@ -113,3 +146,13 @@
 </ng-template>
 
 <!-- end modal -->
+
+<!-- map modal -->
+
+
+<!-- modal -->
+
+
+<!-- end modal -->
+
+<!-- // map modal -->
