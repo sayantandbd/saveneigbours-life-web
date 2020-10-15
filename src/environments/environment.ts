@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   // apiurl:'https://api.saveneighbours.life/public/',
   apiurl: 'http://localhost/nextdoor-help/api/public/',
-  countryJson:'https://api.myjson.com/bins/ujjpg'
+  countryJson:'https://api.jsonbin.io/b/5e89910585182d79b063d1aa'
 };
 
 /*
